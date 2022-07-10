@@ -39,7 +39,7 @@ public class ProjectConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.httpBasic();
         http.authorizeRequests()
-                //所有的请求都需要认证，和默认的配置一样
-                .anyRequest().authenticated();
+                //所有的请求都不需要认证
+                .anyRequest().permitAll();
     }
 }
