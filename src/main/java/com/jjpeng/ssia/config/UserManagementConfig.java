@@ -1,15 +1,13 @@
 package com.jjpeng.ssia.config;
 
-import com.jjpeng.ssia.model.User;
-import com.jjpeng.ssia.service.InMemoryUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 
-import java.util.List;
+import javax.sql.DataSource;
 
 /**
  * @author JJPeng
@@ -19,10 +17,8 @@ import java.util.List;
 public class UserManagementConfig {
 
     @Bean
-    public UserDetailsService userDetailsService() {
-        User user = new User("john", "12345", "read");
-        List<UserDetails> users = List.of(user);
-        return new InMemoryUserDetailsService(users);
+    public UserDetailsService userDetailsService(DataSource dataSource) {
+        return new JdbcUserDetailsManager(dataSource);
     }
 
     @Bean
