@@ -18,8 +18,8 @@ public class UserManagementConfig {
 
     @Bean
     public UserDetailsService userDetailsService(DataSource dataSource) {
-        String usersByUsernameQuery = "select username, password, enabled from users where username = ?";
-        String authsByUserQuery = "select username, authority from authorities where username = ?";
+        String usersByUsernameQuery = "select name, password, enabled from users where name = ?";
+        String authsByUserQuery = "select name, authority from authorities where name = ?";
         JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
         jdbcUserDetailsManager.setUsersByUsernameQuery(usersByUsernameQuery);
         jdbcUserDetailsManager.setAuthoritiesByUsernameQuery(authsByUserQuery);
