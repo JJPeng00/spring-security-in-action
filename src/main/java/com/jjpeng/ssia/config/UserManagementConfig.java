@@ -1,6 +1,6 @@
 package com.jjpeng.ssia.config;
 
-import com.jjpeng.ssia.passwordencoder.PlainTextPasswordEncoder;
+import com.jjpeng.ssia.passwordencoder.Sha512PasswordEncoder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -28,7 +28,7 @@ public class UserManagementConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new PlainTextPasswordEncoder();
+        return new Sha512PasswordEncoder();
     }
 
 }

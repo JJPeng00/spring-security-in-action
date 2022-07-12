@@ -1,2 +1,2 @@
 INSERT INTO `authorities` VALUES (NULL, 'john', 'write');
-INSERT INTO `users` VALUES (NULL, 'john', '12345', '1');
+INSERT INTO `users` VALUES (NULL, 'john', '3627909a29c31381a071ec27f7c9ca97726182aed29a7ddd2e54353322cfb3abb9e3a6df2ac2c20fe23436311d678564dc8d305930575f60e2d3d048184d79', '1');
