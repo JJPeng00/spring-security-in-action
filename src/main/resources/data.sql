@@ -1,2 +1,8 @@
-INSERT INTO `authorities` VALUES (NULL, 'john', 'write');
-INSERT INTO `users` VALUES (NULL, 'john', '3627909a29c31381a071ec27f7c9ca97726182aed29a7ddd2e54353322cfb3abb9e3a6df2ac2c20fe23436311d678564dc8d305930575f60e2d3d048184d79', '1');
+
+-- password=12345
+INSERT IGNORE INTO `spring`.`user` (`id`, `username`, `password`, `algorithm`) VALUES ('1', 'john', '$2a$10$xn3LI/AjqicFYZFruSwve.681477XaVNaUQbr1gioaWPn4t1KsnmG', 'BCRYPT');
+
+INSERT IGNORE INTO `spring`.`authority` (`id`, `name`, `user`) VALUES ('1', 'READ', '1');
+INSERT IGNORE INTO `spring`.`authority` (`id`, `name`, `user`) VALUES ('2', 'WRITE', '1');
+
+INSERT IGNORE INTO `spring`.`product` (`id`, `name`, `price`, `currency`) VALUES ('1', 'Chocolate', '10', 'USD');
