@@ -1,13 +1,9 @@
 package com.jjpeng.ssia.config;
 
-import com.jjpeng.ssia.passwordencoder.Sha512PasswordEncoder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.JdbcUserDetailsManager;
-
-import javax.sql.DataSource;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 
 /**
  * @author JJPeng
@@ -17,18 +13,12 @@ import javax.sql.DataSource;
 public class UserManagementConfig {
 
     @Bean
-    public UserDetailsService userDetailsService(DataSource dataSource) {
-        String usersByUsernameQuery = "select name, password, enabled from users where name = ?";
-        String authsByUserQuery = "select name, authority from authorities where name = ?";
-        JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
-        jdbcUserDetailsManager.setUsersByUsernameQuery(usersByUsernameQuery);
-        jdbcUserDetailsManager.setAuthoritiesByUsernameQuery(authsByUserQuery);
-        return jdbcUserDetailsManager;
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
     }
-
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new Sha512PasswordEncoder();
+    public SCryptPasswordEncoder sCryptPasswordEncoder() {
+        return new SCryptPasswordEncoder();
     }
 
 }
