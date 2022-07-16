@@ -8,6 +8,7 @@ import javax.persistence.*;
  * @author JJPeng
  * @date 2022/7/16 23:00
  */
+@Entity
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
