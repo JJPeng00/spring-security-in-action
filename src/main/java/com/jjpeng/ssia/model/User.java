@@ -1,62 +1,64 @@
 package com.jjpeng.ssia.model;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import com.jjpeng.ssia.model.enums.EncryptionAlgorithm;
 
-import java.util.Collection;
+import javax.persistence.*;
 import java.util.List;
 
 /**
  * @author JJPeng
  * @date 2022/7/11 21:18
- * 使用User直接实现UserDetails并不是一种好的方式
- * 更好的一种实现方式是，使用另一个类实现UserDetails，并将User作为该类的成员对象
- * 这么做能更好的分离职责
  */
-public class User implements UserDetails {
+@Entity
+public class User {
 
-    private final  String username;
-    private final  String password;
-    private final String authority;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-    public User(String username, String password, String authority) {
-        this.username = username;
-        this.password = password;
-        this.authority = authority;
+    private String username;
+
+    private String password;
+
+    @Enumerated(EnumType.STRING)
+    private EncryptionAlgorithm algorithm;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    private List<Authority> authorities;
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(() -> authority);
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
     public String getUsername() {
         return username;
     }
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
+    public String getPassword() {
+        return password;
     }
 
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    @Override
-    public boolean isEnabled() {
-        return true;
+    public EncryptionAlgorithm getAlgorithm() {
+        return algorithm;
+    }
+
+    public void setAlgorithm(EncryptionAlgorithm algorithm) {
+        this.algorithm = algorithm;
+    }
+
+    public List<Authority> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(List<Authority> authorities) {
+        this.authorities = authorities;
     }
 }
