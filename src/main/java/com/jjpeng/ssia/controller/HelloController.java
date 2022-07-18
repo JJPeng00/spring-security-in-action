@@ -14,4 +14,15 @@ public class HelloController {
     public String hell() {
         return "hello!";
     }
+
+    @GetMapping("/ciao")
+    public String ciao() {
+        return "Ciao!";
+    }
+
+    //默认可以直接访问此端点
+    @GetMapping("/hola")
+    public String hola() {
+        return "Hola!";
+    }
 }
