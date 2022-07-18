@@ -21,7 +21,7 @@ public class UserManagementConfig {
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
         UserDetails john = User.withUsername("john")
                 .password("12345")
-                .authorities("REDAD")
+                .authorities("READ")
                 .build();
         UserDetails jane = User.withUsername("jane")
                 .password("12345")
