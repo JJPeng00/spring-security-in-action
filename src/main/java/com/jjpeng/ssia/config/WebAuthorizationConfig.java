@@ -14,11 +14,9 @@ public class WebAuthorizationConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.httpBasic();
-        //使用Spring expression (SpEL)构造复杂的条件
-        String expression = "hasAuthority('READ') and !hasAuthority('DELETE')";
 
         http.authorizeRequests()
                 .anyRequest()
-                .access(expression);
+                .hasRole("ADMIN");
     }
 }
