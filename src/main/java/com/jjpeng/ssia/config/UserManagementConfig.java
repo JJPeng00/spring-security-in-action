@@ -2,8 +2,12 @@ package com.jjpeng.ssia.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 /**
  * @author JJPeng
@@ -13,12 +17,23 @@ import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 public class UserManagementConfig {
 
     @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-    @Bean
-    public SCryptPasswordEncoder sCryptPasswordEncoder() {
-        return new SCryptPasswordEncoder();
+    public UserDetailsService userDetailsService() {
+        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
+        UserDetails john = User.withUsername("john")
+                .password("12345")
+                .authorities("REDAD")
+                .build();
+        UserDetails jane = User.withUsername("jane")
+                .password("12345")
+                .authorities("WRITE")
+                .build();
+        manager.createUser(john);
+        manager.createUser(jane);
+        return manager;
     }
 
+    @Bean
+    public PasswordEncoder bCryptPasswordEncoder() {
+        return NoOpPasswordEncoder.getInstance();
+    }
 }
