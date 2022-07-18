@@ -19,11 +19,10 @@ public class WebAuthorizationConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
 
         http.authorizeRequests()
-                // get访问"/a"路径的请求需要进行用户认证
-                .mvcMatchers(HttpMethod.GET, "/a").authenticated()
-                // post访问"/a"路径的请求，可直接访问
-                .mvcMatchers(HttpMethod.POST, "/a").permitAll()
-                //其他请求都被拒绝（未认证用户返回401，认证用户返回403）
-                .anyRequest().denyAll();
+                // 使用路径表达式选择匹配适合规则的路径（以/a/b未前缀的路径都需要认证），**表示任何数量的路径
+                // 使用路径表达式可以让代码更简洁
+                .mvcMatchers("/a/b/**").authenticated()
+                //其他请求都无需认证
+                .anyRequest().permitAll();
     }
 }
