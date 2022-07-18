@@ -17,6 +17,6 @@ public class WebAuthorizationConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .anyRequest()
-                .permitAll();
+                .hasAuthority("WRITE");
     }
 }
