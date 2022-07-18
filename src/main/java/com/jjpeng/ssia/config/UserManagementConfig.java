@@ -25,7 +25,7 @@ public class UserManagementConfig {
                 .build();
         UserDetails jane = User.withUsername("jane")
                 .password("12345")
-                .authorities("WRITE")
+                .authorities("WRITE", "READ", "DELETE")
                 .build();
         manager.createUser(john);
         manager.createUser(jane);
