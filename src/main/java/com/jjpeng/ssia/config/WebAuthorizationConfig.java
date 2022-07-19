@@ -1,9 +1,10 @@
 package com.jjpeng.ssia.config;
 
+import com.jjpeng.ssia.filter.RequestValidationFilter;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 /**
  * @author JJPeng
@@ -18,8 +19,12 @@ public class WebAuthorizationConfig extends WebSecurityConfigurerAdapter {
         //关闭CSRF 为了可以调用/a路径的post请求，不关闭的话会401
         http.csrf().disable();
 
+        //将自定义过滤器添加到认证过滤器之前
+        http.addFilterBefore(
+                new RequestValidationFilter(),
+                BasicAuthenticationFilter.class);
+
         http.authorizeRequests()
-                // "/hello"路径的请求需要认证，但"/hello/"路径的请求不需要认证
-                .antMatchers("/hello").authenticated();
+                .anyRequest().permitAll();
     }
 }
