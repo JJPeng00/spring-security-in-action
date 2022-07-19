@@ -19,11 +19,7 @@ public class WebAuthorizationConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
 
         http.authorizeRequests()
-                // 选择带有路径变量的endpoint，路径变量还需满足真则表达式，过滤不是数字的字符串
-                // curl http://localhost:8080/product/1234a 返回401
-                // curl http://localhost:8080/product/12345 返回12345
-                .mvcMatchers("/product/{code:^[0-9]*$}").permitAll()
-                //其他请求都无需认证
-                .anyRequest().permitAll();
+                // "/hello"路径的请求需要认证，但"/hello/"路径的请求不需要认证
+                .antMatchers("/hello").authenticated();
     }
 }
