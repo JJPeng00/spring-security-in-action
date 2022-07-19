@@ -1,5 +1,6 @@
 package com.jjpeng.ssia.config;
 
+import com.jjpeng.ssia.filter.AuthenticationLoggingFilter;
 import com.jjpeng.ssia.filter.RequestValidationFilter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -21,8 +22,12 @@ public class WebAuthorizationConfig extends WebSecurityConfigurerAdapter {
 
         //将自定义过滤器添加到认证过滤器之前
         http.addFilterBefore(
-                new RequestValidationFilter(),
-                BasicAuthenticationFilter.class);
+                        new RequestValidationFilter(),
+                        BasicAuthenticationFilter.class)
+                //在认证过滤器之后添加日志过滤器
+                .addFilterAfter(
+                        new AuthenticationLoggingFilter(),
+                        BasicAuthenticationFilter.class);
 
         http.authorizeRequests()
                 .anyRequest().permitAll();
