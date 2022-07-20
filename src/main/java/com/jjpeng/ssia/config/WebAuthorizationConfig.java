@@ -15,9 +15,13 @@ public class WebAuthorizationConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
+        http.formLogin()
+                .defaultSuccessUrl("/main", true);
+
         http.addFilterAfter(new CsrfTokenLoggerFilter(), CsrfFilter.class);
 
         http.authorizeRequests()
-                .anyRequest().permitAll();
+                .anyRequest().authenticated();
     }
 }
