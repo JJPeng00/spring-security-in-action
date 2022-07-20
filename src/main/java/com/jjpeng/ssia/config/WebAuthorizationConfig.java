@@ -1,12 +1,10 @@
 package com.jjpeng.ssia.config;
 
-import com.jjpeng.ssia.filter.AuthenticationLoggingFilter;
-import com.jjpeng.ssia.filter.StaticKeyAuthenticationFilter;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.jjpeng.ssia.filter.CsrfTokenLoggerFilter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.web.csrf.CsrfFilter;
 
 /**
  * @author JJPeng
@@ -15,18 +13,9 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 @Configuration
 public class WebAuthorizationConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private StaticKeyAuthenticationFilter staticKeyAuthenticationFilter;
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.httpBasic();
-        //关闭CSRF 为了可以调用/a路径的post请求，不关闭的话会401
-        http.csrf().disable();
-
-        http.addFilterAfter(
-                new AuthenticationLoggingFilter(),
-                BasicAuthenticationFilter.class);
+        http.addFilterAfter(new CsrfTokenLoggerFilter(), CsrfFilter.class);
 
         http.authorizeRequests()
                 .anyRequest().permitAll();
