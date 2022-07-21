@@ -1,10 +1,13 @@
 package com.jjpeng.ssia.config;
 
+import com.jjpeng.ssia.csrf.CustomCsrfTokenRepository;
 import com.jjpeng.ssia.filter.CsrfTokenLoggerFilter;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.csrf.CsrfFilter;
+import org.springframework.security.web.csrf.CsrfTokenRepository;
 
 /**
  * @author JJPeng
@@ -13,9 +16,18 @@ import org.springframework.security.web.csrf.CsrfFilter;
 @Configuration
 public class WebAuthorizationConfig extends WebSecurityConfigurerAdapter {
 
+    @Bean
+    public CsrfTokenRepository customTokenRepository() {
+        return new CustomCsrfTokenRepository();
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf(c -> c.ignoringAntMatchers("/ciao"));
+        http.csrf(c -> {
+            c.csrfTokenRepository(customTokenRepository());
+            c.ignoringAntMatchers("/ciao");
+        });
+
         http.addFilterAfter(new CsrfTokenLoggerFilter(), CsrfFilter.class);
 
         http.authorizeRequests()
