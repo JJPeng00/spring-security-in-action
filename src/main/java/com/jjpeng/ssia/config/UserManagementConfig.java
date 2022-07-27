@@ -19,11 +19,16 @@ public class UserManagementConfig {
     @Bean
     public UserDetailsService userDetailsService() {
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-        UserDetails john = User.withUsername("john")
+        UserDetails natalie = User.withUsername("natalie")
                 .password("12345")
                 .authorities("READ")
                 .build();
-        manager.createUser(john);
+        UserDetails emma = User.withUsername("emma")
+                .password("12345")
+                .authorities("write")
+                .build();
+        manager.createUser(natalie);
+        manager.createUser(emma);
         return manager;
     }
 
