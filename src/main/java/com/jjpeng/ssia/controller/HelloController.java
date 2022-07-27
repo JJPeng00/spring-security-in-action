@@ -1,5 +1,7 @@
 package com.jjpeng.ssia.controller;
 
+import com.jjpeng.ssia.model.Employee;
+import com.jjpeng.ssia.service.BookService;
 import com.jjpeng.ssia.service.NameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +20,8 @@ public class HelloController {
 
     @Autowired
     private NameService nameService;
+    @Autowired
+    private BookService bookService;
 
     @GetMapping("/hello")
     public String getHello() {
@@ -27,6 +31,11 @@ public class HelloController {
     @GetMapping("/secret/names/{name}")
     public List<String> names(@PathVariable String name) {
         return nameService.getSecretNames(name);
+    }
+
+    @GetMapping("/book/details/{name}")
+    public Employee getDetails(@PathVariable String name) {
+        return bookService.getBookDetails(name);
     }
 
     @PostMapping("/hello")
