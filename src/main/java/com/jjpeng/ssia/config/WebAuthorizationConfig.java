@@ -10,8 +10,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  * @date 2022/7/10 19:48
  */
 @Configuration
-//允许pre/postauthorization
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebAuthorizationConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {

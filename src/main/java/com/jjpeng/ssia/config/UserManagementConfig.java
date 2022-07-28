@@ -21,11 +21,11 @@ public class UserManagementConfig {
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
         UserDetails natalie = User.withUsername("natalie")
                 .password("12345")
-                .authorities("READ")
+                .roles("admin")
                 .build();
         UserDetails emma = User.withUsername("emma")
                 .password("12345")
-                .authorities("write")
+                .roles("manager")
                 .build();
         manager.createUser(natalie);
         manager.createUser(emma);
